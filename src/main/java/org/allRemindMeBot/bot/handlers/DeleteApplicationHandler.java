@@ -1,0 +1,60 @@
+package org.allRemindMeBot.bot.handlers;
+
+import org.allRemindMeBot.bot.workers.BotUserApplicationWorker;
+import org.allRemindMeBot.entity.BotUser;
+import org.allRemindMeBot.entity.BotUserApplication;
+import org.allRemindMeBot.enums.AppCounters;
+import org.allRemindMeBot.enums.Messages;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Component
+public class DeleteApplicationHandler {
+    private final BotUserApplicationWorker botUserApplicationWorker;
+
+    public DeleteApplicationHandler(BotUserApplicationWorker botUserApplicationWorker) {
+        this.botUserApplicationWorker = botUserApplicationWorker;
+    }
+
+    public void handle(SendMessage message, BotUser user) {
+        message.setText(Messages.LOOK_EMPTY_MSG.getMessage());
+        Optional<List<BotUserApplication>> applications = this.botUserApplicationWorker.getFromBaseAllApplicationByChatId(user.getUserChatId());
+        if (applications.isPresent()) {
+            List<BotUserApplication> appList = applications.get();
+            if (appList.size() > AppCounters.ZERO_COUNTER.getCounter()) {
+                InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
+                List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+                for (BotUserApplication application : appList) {
+                    List<InlineKeyboardButton> buttonRow = new ArrayList<>();
+                    InlineKeyboardButton appButton = new InlineKeyboardButton();
+                    appButton.setText(application.getApplicationText());
+                    appButton.setCallbackData(String.valueOf(application.getId()));
+                    buttonRow.add(appButton);
+                    rowList.add(buttonRow);
+                }
+                keyboardMarkup.setKeyboard(rowList);
+                message.setReplyMarkup(keyboardMarkup);
+                message.setText(Messages.LOOK_ALL_MSG.getMessage());
+            }
+        }
+    }
+
+    public void deleteApplication(SendMessage message, Update update) {
+        message.setText(Messages.DELETE_EMPTY_MSG.getMessage());
+        try {
+            Optional<BotUserApplication> application = this.botUserApplicationWorker.deleteApplication(Integer.valueOf(update.getCallbackQuery().getData()));
+            if (application.isPresent()) {
+                message.setText(Messages.DELETE_SUCCESS_MSG.getMessage());
+            }
+        } catch (Exception exception) {
+            message.setText(Messages.ERROR_MSG.getMessage());
+        }
+    }
+}
