@@ -35,6 +35,8 @@ public class CommandHandler {
                 this.lookApplicationHandler.handle(message, user);
             } else if (Buttons.DELETE_BUTTON.getButton().equals(msgText)) {
                 this.deleteApplicationHandler.handle(message, user);
+            } else if (Buttons.DELETE_HIST_BUTTON.getButton().equals(msgText)) {
+                this.deleteApplicationHandler.deleteHistApplications(message, user);
             } else {
                 this.addApplicationHandler.handle(message, update, user);
             }

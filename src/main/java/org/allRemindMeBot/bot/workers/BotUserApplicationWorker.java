@@ -57,4 +57,8 @@ public class BotUserApplicationWorker {
     public Optional<BotUserApplication> deleteApplication(Integer appId) {
         return this.applicationDao.deleteApplicationById(appId);
     }
+
+    public void deleteHistory(Date date, Long chatId) {
+        this.applicationDao.deleteHistoryApplication(date, chatId);
+    }
 }

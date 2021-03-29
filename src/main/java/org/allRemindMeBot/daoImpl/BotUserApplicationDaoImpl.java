@@ -70,8 +70,8 @@ public class BotUserApplicationDaoImpl implements BotUserApplicationDao {
     public Optional<List<BotUserApplication>> findAllByChatId(Long chatId) {
         Optional<List<BotUserApplication>> applications;
         try {
-            applications = Optional.of(entityManager.createQuery("SELECT APP FROM BotUserApplication APP WHERE APP.chatId = :chatId", BotUserApplication.class)
-                    .setParameter("chatId", chatId)
+            applications = Optional.of(entityManager.createQuery("SELECT APP FROM BotUserApplication APP WHERE APP.chatId = :chatId AND APP.dateApplication >= :date", BotUserApplication.class)
+                    .setParameter("chatId", chatId).setParameter("date",new Date())
                     .getResultList());
         } catch (NoResultException exception) {
             applications = Optional.empty();
@@ -96,6 +96,13 @@ public class BotUserApplicationDaoImpl implements BotUserApplicationDao {
     @Transactional
     public void delete(BotUserApplication data) {
         this.entityManager.remove(data);
+    }
+
+    @Override
+    @Transactional
+    public void deleteHistoryApplication(Date date, Long chatId) {
+        this.entityManager.createQuery("DELETE FROM BotUserApplication APP WHERE APP.dateApplication <= :date AND APP.chatId = :chatId")
+                .setParameter("date", date).setParameter("chatId",chatId).executeUpdate();
     }
 
     @Override

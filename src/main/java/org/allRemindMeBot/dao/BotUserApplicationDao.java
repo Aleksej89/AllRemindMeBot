@@ -18,4 +18,8 @@ public interface BotUserApplicationDao extends GenericDao<BotUserApplication, In
     default Optional<BotUserApplication> deleteApplicationById(Integer appId) {
         return Optional.empty();
     }
+
+    default void deleteHistoryApplication(Date date, Long chatId) {
+
+    }
 }

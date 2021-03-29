@@ -12,6 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,5 +57,10 @@ public class DeleteApplicationHandler {
         } catch (Exception exception) {
             message.setText(Messages.ERROR_MSG.getMessage());
         }
+    }
+
+    public void deleteHistApplications(SendMessage message, BotUser user){
+        message.setText(Messages.DELETE_HIST_SUCCESS_MSG.getMessage());
+        this.botUserApplicationWorker.deleteHistory(new Date(), user.getUserChatId());
     }
 }
