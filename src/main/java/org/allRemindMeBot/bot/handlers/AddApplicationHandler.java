@@ -14,7 +14,6 @@ import java.util.Optional;
 @Component
 public class AddApplicationHandler {
     private final BotUserApplicationWorker botUserApplicationWorker;
-    private static final Date NEW_DATE_APP = new Date();
 
     public AddApplicationHandler(BotUserApplicationWorker botUserApplicationWorker) {
         this.botUserApplicationWorker = botUserApplicationWorker;
@@ -24,7 +23,7 @@ public class AddApplicationHandler {
         message.setText(Messages.INFO_MSG.getMessage());
         Optional<BotUserApplication> application = this.botUserApplicationWorker.createNewApplication(update, user);
         if (application.isPresent()) {
-            if (application.get().getDateApplication().after(NEW_DATE_APP)) {
+            if (application.get().getDateApplication().after(new Date())) {
                 this.botUserApplicationWorker.saveToBaseBotUserApplication(application.get());
                 message.setText(Messages.ADD_SUCCESS_MSG.getMessage());
             }
