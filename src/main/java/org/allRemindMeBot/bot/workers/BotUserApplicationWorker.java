@@ -30,27 +30,20 @@ public class BotUserApplicationWorker {
     }
 
     public Optional<BotUserApplication> createNewApplication(Update update, BotUser user) {
-        Optional<BotUser> botUser = this.userDao.findUser(user);
-        BotUserApplication userApplication = null;
-        if (botUser.isPresent()) {
-            String messageText = update.getMessage().getText();
-            Matcher date = Pattern.compile(DATE_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
-            Matcher time = Pattern.compile(TIME_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
-            if (date.find()) {
-                if (time.find()) {
-                    Optional<Date> dateOpt = DateConverter.getDate(date.group(1), time.group(1));
-                    if (dateOpt.isPresent()) {
-                        userApplication = BotUserApplication.builder().chatId(user.getUserChatId()).applicationText(messageText)
-                                .applicationText(messageText).dateApplication(dateOpt.get()).build();
-                    }
+        Optional<BotUserApplication> application = Optional.empty();
+        String messageText = update.getMessage().getText();
+        Matcher date = Pattern.compile(DATE_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
+        Matcher time = Pattern.compile(TIME_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
+        if (date.find()) {
+            if (time.find()) {
+                Optional<Date> dateOpt = DateConverter.getDate(date.group(1), time.group(1));
+                if (dateOpt.isPresent()) {
+                    application = Optional.of(BotUserApplication.builder().chatId(user.getUserChatId()).applicationText(messageText)
+                            .applicationText(messageText).dateApplication(dateOpt.get()).build());
                 }
             }
         }
-        if (userApplication == null) {
-            return Optional.empty();
-        } else {
-            return Optional.of(userApplication);
-        }
+        return application;
     }
 
     public void saveToBaseBotUserApplication(BotUserApplication application) {
