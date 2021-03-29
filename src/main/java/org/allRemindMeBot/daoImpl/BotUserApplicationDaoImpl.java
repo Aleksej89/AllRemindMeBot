@@ -70,8 +70,8 @@ public class BotUserApplicationDaoImpl implements BotUserApplicationDao {
     public Optional<List<BotUserApplication>> findAllByChatId(Long chatId) {
         Optional<List<BotUserApplication>> applications;
         try {
-            applications = Optional.of(entityManager.createQuery("SELECT APP FROM BotUserApplication APP WHERE APP.dateApplication >= :startDate AND APP.chatId = :chatId", BotUserApplication.class)
-                    .setParameter("startDate", new Date()).setParameter("chatId", chatId)
+            applications = Optional.of(entityManager.createQuery("SELECT APP FROM BotUserApplication APP WHERE APP.chatId = :chatId", BotUserApplication.class)
+                    .setParameter("chatId", chatId)
                     .getResultList());
         } catch (NoResultException exception) {
             applications = Optional.empty();
