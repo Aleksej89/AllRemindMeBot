@@ -11,7 +11,6 @@ import java.util.TimeZone;
 
 @Log
 public class DateConverter {
-    private static final Date NEW_DATE_APP = new Date();
     private static final String TWO_COUNTER_REGEXP = "\\d{2}[.]\\d{2}";
     private static final String MORE_THAN_TWO_COUNTER_REGEXP = "\\d{2}[.]\\d{2}[.]\\d{4}";
 
@@ -28,7 +27,7 @@ public class DateConverter {
                 date = Optional.of(format.parse(dateStr + " " + time + ":00"));
             }
             if (date.isPresent()) {
-                if (date.get().after(NEW_DATE_APP)) return date;
+                if (date.get().after(new Date())) return date;
             }
         } catch (ParseException exception) {
             date = Optional.empty();
