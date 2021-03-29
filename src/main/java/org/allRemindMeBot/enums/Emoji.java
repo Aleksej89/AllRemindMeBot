@@ -3,7 +3,7 @@ package org.allRemindMeBot.enums;
 public enum Emoji {
     APP_EMOJI("✉"),
     SUCCESS_EMOJI("✅"),
-    ERROR_EMOJI("⚡"),
+    ERROR_EMOJI("☠"),
     LISTS_EMOJI("✏"),
     INFO_EMOJI("⚠"),
     REF_INFO_EMOJI("☎"),

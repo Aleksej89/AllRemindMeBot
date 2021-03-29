@@ -1,9 +1,9 @@
 package org.allRemindMeBot.enums;
 
 public enum Messages {
-    LOOK_EMPTY_MSG(Emoji.INFO_EMOJI.getEmojiStr() + "На данном этапе список напоминаний пуст" + Emoji.INFO_EMOJI.getEmojiStr()),
+    LOOK_EMPTY_MSG(Emoji.INFO_EMOJI.getEmojiStr() + "Список Ваших напоминаний пуст" + Emoji.INFO_EMOJI.getEmojiStr()),
     LOOK_ALL_MSG(Emoji.LISTS_EMOJI.getEmojiStr() + "Список Ваших напоминаний" + Emoji.LISTS_EMOJI.getEmojiStr()),
-    ADD_SUCCESS_MSG(Emoji.LISTS_EMOJI.getEmojiStr() + "Напоминание успешно добавлено" + Emoji.LISTS_EMOJI.getEmojiStr()),
+    ADD_SUCCESS_MSG(Emoji.SUCCESS_EMOJI.getEmojiStr() + "Напоминание успешно добавлено" + Emoji.SUCCESS_EMOJI.getEmojiStr()),
     DELETE_SUCCESS_MSG(Emoji.DELETE_SUCCESS_EMOJI.getEmojiStr() + "Напоминание успешно удалено" + Emoji.DELETE_SUCCESS_EMOJI.getEmojiStr()),
     DELETE_HIST_SUCCESS_MSG(Emoji.DELETE_SUCCESS_EMOJI.getEmojiStr() + "История напоминаний очищена" + Emoji.DELETE_SUCCESS_EMOJI.getEmojiStr()),
     DELETE_EMPTY_MSG(Emoji.DELETE_EMPTY_EMOJI.getEmojiStr() + "Заявка была уже удалена" + Emoji.DELETE_EMPTY_EMOJI.getEmojiStr()),

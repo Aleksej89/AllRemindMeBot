@@ -22,6 +22,7 @@ import java.util.Optional;
 @Component
 public class ApplicationSender implements Runnable {
     private final static int DATE_MILLS_COUNTER = 500;
+    private final static String APP_DELIMITER = "  ";
     private final BotUserApplicationDao applicationDao;
     private final Bot bot;
 
@@ -55,7 +56,7 @@ public class ApplicationSender implements Runnable {
             if (list.size() > AppCounters.ZERO_COUNTER.getCounter()) {
                 for (BotUserApplication app : list) {
                     SendMessage message = new SendMessage();
-                    message.setText(Emoji.APP_EMOJI + app.getApplicationText());
+                    message.setText(Emoji.APP_EMOJI.getEmojiStr() + APP_DELIMITER + app.getApplicationText());
                     message.setChatId(String.valueOf(app.getChatId()));
                     try {
                         this.bot.execute(message);
