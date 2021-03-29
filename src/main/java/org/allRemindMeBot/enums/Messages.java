@@ -1,20 +1,19 @@
 package org.allRemindMeBot.enums;
 
 public enum Messages {
-    APP_DEFAULT_MSG("✉ НАПОМИНАНИЕ ✉\n\n"),
-    LOOK_EMPTY_MSG("⌛ На данном этапе список напоминаний пуст ⌛\n"),
-    LOOK_ALL_MSG("✍ Список Ваших напоминаний ✍\n"),
-    ADD_SUCCESS_MSG("✅ Напоминание успешно добавлено ✅\n"),
-    DELETE_SUCCESS_MSG("❎ Напоминание успешно удалено ❎"),
-    DELETE_HIST_SUCCESS_MSG("❎ История напоминаний очищена ❎"),
-    DELETE_EMPTY_MSG("✂ Заявка была уже удалена ✂"),
-    ERROR_MSG("❌ Что-то пошло не так - попробуйте еще раз, внимательно прочитав справочную информацию ❌\n"),
-    INFO_MSG("♥ Уважаемый пользователь! ♥\n\n" +
+    LOOK_EMPTY_MSG(Emoji.INFO_EMOJI.getEmojiStr() + "На данном этапе список напоминаний пуст" + Emoji.INFO_EMOJI.getEmojiStr()),
+    LOOK_ALL_MSG(Emoji.LISTS_EMOJI.getEmojiStr() + "Список Ваших напоминаний" + Emoji.LISTS_EMOJI.getEmojiStr()),
+    ADD_SUCCESS_MSG(Emoji.LISTS_EMOJI.getEmojiStr() + "Напоминание успешно добавлено" + Emoji.LISTS_EMOJI.getEmojiStr()),
+    DELETE_SUCCESS_MSG(Emoji.DELETE_SUCCESS_EMOJI.getEmojiStr() + "Напоминание успешно удалено" + Emoji.DELETE_SUCCESS_EMOJI.getEmojiStr()),
+    DELETE_HIST_SUCCESS_MSG(Emoji.DELETE_SUCCESS_EMOJI.getEmojiStr() + "История напоминаний очищена" + Emoji.DELETE_SUCCESS_EMOJI.getEmojiStr()),
+    DELETE_EMPTY_MSG(Emoji.DELETE_EMPTY_EMOJI.getEmojiStr() + "Заявка была уже удалена" + Emoji.DELETE_EMPTY_EMOJI.getEmojiStr()),
+    ERROR_MSG(Emoji.ERROR_EMOJI.getEmojiStr() + "Что-то пошло не так - попробуйте еще раз, внимательно прочитав справочную информацию" + Emoji.ERROR_EMOJI.getEmojiStr()),
+    INFO_MSG(Emoji.HART_EMOJI.getEmojiStr() + "Уважаемый пользователь!" + Emoji.HART_EMOJI.getEmojiStr() + "\n" +
             "Напоминания вводится в текстовом формате с указанием даты и времени в будущем:\n" +
             "Форматы даты: ДД.ММ, ДД.ММ.ГГГГ\n" +
             "Формат времени: ЧЧ: ММ\n" +
             "Например: 24.03 12:00 позвонить маме.\n"),
-    INFO_ALL_MSG("☎ Уважаемый пользователь! ☎\n\n" +
+    INFO_ALL_MSG(Emoji.REF_INFO_EMOJI.getEmojiStr() + "Уважаемый пользователь!" + Emoji.REF_INFO_EMOJI.getEmojiStr() + "\n" +
             "Для создания напоминания Вам достаточно ввести его текст в чат и отправить боту.\n" +
             "Напоминания вводится в текстовом формате с указанием даты и времени в будущем:\n" +
             "Форматы даты: ДД.ММ, ДД.ММ.ГГГГ\n" +

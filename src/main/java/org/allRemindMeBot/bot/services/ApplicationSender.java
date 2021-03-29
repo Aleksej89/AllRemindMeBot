@@ -6,6 +6,7 @@ import org.allRemindMeBot.bot.body.Bot;
 import org.allRemindMeBot.dao.BotUserApplicationDao;
 import org.allRemindMeBot.entity.BotUserApplication;
 import org.allRemindMeBot.enums.AppCounters;
+import org.allRemindMeBot.enums.Emoji;
 import org.allRemindMeBot.enums.Messages;
 import org.allRemindMeBot.enums.ServiceCounters;
 import org.springframework.stereotype.Component;
@@ -54,7 +55,7 @@ public class ApplicationSender implements Runnable {
             if (list.size() > AppCounters.ZERO_COUNTER.getCounter()) {
                 for (BotUserApplication app : list) {
                     SendMessage message = new SendMessage();
-                    message.setText(Messages.APP_DEFAULT_MSG.getMessage() + app.getApplicationText());
+                    message.setText(Emoji.APP_EMOJI + app.getApplicationText());
                     message.setChatId(String.valueOf(app.getChatId()));
                     try {
                         this.bot.execute(message);
