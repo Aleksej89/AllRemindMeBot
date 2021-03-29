@@ -21,7 +21,7 @@ import java.util.Optional;
 @Log
 @Component
 public class ApplicationSender implements Runnable {
-    private final static int DATE_MILLS_COUNTER = 500;
+    private final static int DATE_MILLS_COUNTER = 300;
     private final static String APP_DELIMITER = "  ";
     private final BotUserApplicationDao applicationDao;
     private final Bot bot;

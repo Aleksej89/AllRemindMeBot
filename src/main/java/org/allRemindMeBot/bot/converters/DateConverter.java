@@ -32,8 +32,6 @@ public class DateConverter {
             }
             if (date.isPresent()) {
                 if (date.get().after(new Date())) return date;
-            } else {
-                return Optional.empty();
             }
         } catch (ParseException exception) {
             log.severe("[ERROR] Converter. Cant parse: " + exception.getMessage());
