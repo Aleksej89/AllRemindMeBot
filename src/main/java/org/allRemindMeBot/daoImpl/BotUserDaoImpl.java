@@ -38,6 +38,7 @@ public class BotUserDaoImpl implements BotUserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+
     private Optional<BotUser> getFromBase(Long chatId) {
         Optional<BotUser> user;
         try {

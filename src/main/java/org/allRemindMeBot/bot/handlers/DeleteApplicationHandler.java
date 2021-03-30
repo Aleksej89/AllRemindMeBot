@@ -28,11 +28,9 @@ public class DeleteApplicationHandler {
         message.setText(Messages.LOOK_EMPTY_MSG.getMessage());
         Optional<List<BotUserApplication>> applications = this.botUserApplicationWorker.getFromBaseAllApplicationByChatId(user.getUserChatId());
         if (applications.isPresent()) {
-            List<BotUserApplication> appList = applications.get();
-            if (appList.size() > AppCounters.ZERO_COUNTER.getCounter()) {
-                InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
+            if (applications.get().size() > AppCounters.ZERO_COUNTER.getCounter()) {
                 List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-                for (BotUserApplication application : appList) {
+                for (BotUserApplication application : applications.get()) {
                     List<InlineKeyboardButton> buttonRow = new ArrayList<>();
                     InlineKeyboardButton appButton = new InlineKeyboardButton();
                     appButton.setText(application.getApplicationText());
@@ -40,6 +38,7 @@ public class DeleteApplicationHandler {
                     buttonRow.add(appButton);
                     rowList.add(buttonRow);
                 }
+                InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
                 keyboardMarkup.setKeyboard(rowList);
                 message.setReplyMarkup(keyboardMarkup);
                 message.setText(Messages.LOOK_ALL_MSG.getMessage());
@@ -50,8 +49,7 @@ public class DeleteApplicationHandler {
     public void deleteApplication(SendMessage message, Update update) {
         message.setText(Messages.DELETE_EMPTY_MSG.getMessage());
         try {
-            Optional<BotUserApplication> application = this.botUserApplicationWorker.deleteApplication(Integer.valueOf(update.getCallbackQuery().getData()));
-            if (application.isPresent()) {
+            if (this.botUserApplicationWorker.deleteApplication(Integer.valueOf(update.getCallbackQuery().getData())).isPresent()) {
                 message.setText(Messages.DELETE_SUCCESS_MSG.getMessage());
             }
         } catch (Exception exception) {
@@ -59,7 +57,7 @@ public class DeleteApplicationHandler {
         }
     }
 
-    public void deleteHistApplications(SendMessage message, BotUser user){
+    public void deleteHistApplications(SendMessage message, BotUser user) {
         message.setText(Messages.DELETE_HIST_SUCCESS_MSG.getMessage());
         this.botUserApplicationWorker.deleteHistory(new Date(), user.getUserChatId());
     }

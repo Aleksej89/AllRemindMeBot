@@ -1,5 +1,6 @@
 package org.allRemindMeBot.bot.handlers;
 
+import org.allRemindMeBot.bot.menu.Menu;
 import org.allRemindMeBot.bot.workers.BotUserWorker;
 import org.allRemindMeBot.entity.BotUser;
 import org.allRemindMeBot.enums.Messages;
@@ -23,6 +24,7 @@ public class IncomingMsgHandler {
     public SendMessage handle(Update update) {
         SendMessage message = new SendMessage();
         message.setText(Messages.INFO_MSG.getMessage());
+        message.setReplyMarkup(Menu.getReplyKeyboardMarkup());
         BotUser user = this.botUserWorker.createNewBotUser(update);
         Optional<BotUser> botUser = this.botUserWorker.getFromBaseBotUser(user);
         if (botUser.isEmpty()) {
@@ -31,7 +33,7 @@ public class IncomingMsgHandler {
             user = botUser.get();
         }
         if (update.hasMessage() && update.getMessage().hasText() || update.hasCallbackQuery()) {
-            message = this.commandHandler.handle(update, user);
+            this.commandHandler.handle(message, update, user);
         }
         message.setChatId(String.valueOf(user.getUserChatId()));
         return message;

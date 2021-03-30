@@ -1,5 +1,6 @@
 package org.allRemindMeBot.bot.workers;
 
+import com.vdurmont.emoji.EmojiParser;
 import lombok.extern.java.Log;
 import org.allRemindMeBot.bot.converters.DateConverter;
 import org.allRemindMeBot.dao.BotUserApplicationDao;
@@ -18,28 +19,28 @@ import java.util.regex.Pattern;
 @Log
 @Component
 public class BotUserApplicationWorker {
-    private final BotUserDao userDao;
     private final BotUserApplicationDao applicationDao;
 
     private final static String DATE_REGEXP = "(\\d{2}[.]\\d{2}[.]\\d{4}|\\d{2}[.]\\d{2})";
     private final static String TIME_REGEXP = "(\\d{2}[:]\\d{2})";
 
-    public BotUserApplicationWorker(BotUserDao userDao, BotUserApplicationDao applicationDao) {
-        this.userDao = userDao;
+    public BotUserApplicationWorker(BotUserApplicationDao applicationDao) {
         this.applicationDao = applicationDao;
     }
 
     public Optional<BotUserApplication> createNewApplication(Update update, BotUser user) {
         Optional<BotUserApplication> application = Optional.empty();
-        String messageText = update.getMessage().getText();
-        Matcher date = Pattern.compile(DATE_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
-        Matcher time = Pattern.compile(TIME_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
-        if (date.find() && time.find()) {
-            Optional<Date> dateOpt = DateConverter.getDate(date.group(1), time.group(1));
-            if (dateOpt.isPresent()) {
-                application = Optional.of(BotUserApplication.builder().chatId(user.getUserChatId()).applicationText(messageText)
-                        .applicationText(messageText).dateApplication(dateOpt.get()).build());
+        String messageText = EmojiParser.removeAllEmojis(update.getMessage().getText());
+        if (!messageText.isEmpty()) {
+            Matcher date = Pattern.compile(DATE_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
+            Matcher time = Pattern.compile(TIME_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
+            if (date.find() && time.find()) {
+                Optional<Date> dateOpt = DateConverter.getDate(date.group(1), time.group(1));
+                if (dateOpt.isPresent()) {
+                    application = Optional.of(BotUserApplication.builder().chatId(user.getUserChatId()).applicationText(messageText)
+                            .applicationText(messageText).dateApplication(dateOpt.get()).build());
 
+                }
             }
         }
         return application;

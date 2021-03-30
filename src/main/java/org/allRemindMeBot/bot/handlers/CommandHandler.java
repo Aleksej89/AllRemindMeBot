@@ -23,9 +23,7 @@ public class CommandHandler {
         this.deleteApplicationHandler = deleteApplicationHandler;
     }
 
-    public SendMessage handle(Update update, BotUser user) {
-        SendMessage message = new SendMessage();
-        message.setReplyMarkup(Menu.getReplyKeyboardMarkup());
+    public void handle(SendMessage message, Update update, BotUser user) {
         message.setText(Messages.ERROR_MSG.getMessage());
         if (update.hasMessage() && update.getMessage().hasText()) {
             String msgText = update.getMessage().getText();
@@ -44,6 +42,5 @@ public class CommandHandler {
         if (update.hasCallbackQuery()) {
             this.deleteApplicationHandler.deleteApplication(message, update);
         }
-        return message;
     }
 }
