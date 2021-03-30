@@ -6,6 +6,7 @@ import org.allRemindMeBot.bot.converters.DateConverter;
 import org.allRemindMeBot.dao.BotUserApplicationDao;
 import org.allRemindMeBot.entity.BotUser;
 import org.allRemindMeBot.entity.BotUserApplication;
+import org.allRemindMeBot.enums.Delimiters;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -20,8 +21,10 @@ import java.util.regex.Pattern;
 public class BotUserApplicationWorker {
     private final BotUserApplicationDao applicationDao;
 
+    private static final String CHARACTER_FILTER = "[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]";
     private final static String DATE_REGEXP = "(\\d{2}[.]\\d{2}[.]\\d{4}|\\d{2}[.]\\d{2})";
     private final static String TIME_REGEXP = "(\\d{2}[:]\\d{2})";
+
 
     public BotUserApplicationWorker(BotUserApplicationDao applicationDao) {
         this.applicationDao = applicationDao;
@@ -29,7 +32,8 @@ public class BotUserApplicationWorker {
 
     public Optional<BotUserApplication> createNewApplication(Update update, BotUser user) {
         Optional<BotUserApplication> application = Optional.empty();
-        String messageText = EmojiParser.removeAllEmojis(update.getMessage().getText());
+        String messageText = EmojiParser.removeAllEmojis(update.getMessage().
+                getText()).replaceAll(CHARACTER_FILTER, Delimiters.NON_WHITE_SPACE_DELIMITER.getDelimiter()).trim();
         if (!messageText.isEmpty()) {
             Matcher date = Pattern.compile(DATE_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
             Matcher time = Pattern.compile(TIME_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
@@ -38,7 +42,6 @@ public class BotUserApplicationWorker {
                 if (dateOpt.isPresent()) {
                     application = Optional.of(BotUserApplication.builder().chatId(user.getUserChatId()).applicationText(messageText)
                             .applicationText(messageText).dateApplication(dateOpt.get()).build());
-
                 }
             }
         }

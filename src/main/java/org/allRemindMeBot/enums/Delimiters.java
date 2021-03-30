@@ -1,6 +1,7 @@
 package org.allRemindMeBot.enums;
 
 public enum Delimiters {
+    NON_WHITE_SPACE_DELIMITER(""),
     ONE_WHITE_SPACE_DELIMITER(" "),
     TWO_WHITE_SPACE_DELIMITER("  "),
     DATE_DELIMITER("."),
