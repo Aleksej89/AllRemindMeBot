@@ -2,7 +2,7 @@ package org.allRemindMeBot.bot.services;
 
 import lombok.extern.java.Log;
 import org.allRemindMeBot.bot.body.Bot;
-import org.allRemindMeBot.enums.ServiceCounters;
+import org.allRemindMeBot.enums.AppCounters;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -26,7 +26,7 @@ public class MessageSender implements Runnable {
                     this.send(object);
                 }
                 try {
-                    Thread.sleep(ServiceCounters.SERVICE_SLEEP_MILLS_COUNTER.getCounter());
+                    Thread.sleep(AppCounters.SERVICE_SLEEP_MILLS_COUNTER.getCounter());
                 } catch (InterruptedException exception) {
                     log.severe("[ERROR] MessageSender. Catch interrupt. Exit: " + exception.getMessage());
                 }

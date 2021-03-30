@@ -7,8 +7,6 @@ import org.allRemindMeBot.dao.BotUserApplicationDao;
 import org.allRemindMeBot.entity.BotUserApplication;
 import org.allRemindMeBot.enums.AppCounters;
 import org.allRemindMeBot.enums.Emoji;
-import org.allRemindMeBot.enums.Messages;
-import org.allRemindMeBot.enums.ServiceCounters;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -38,7 +36,7 @@ public class ApplicationSender implements Runnable {
             while (true) {
                 this.send();
                 try {
-                    Thread.sleep(ServiceCounters.SERVICE_SLEEP_MILLS_COUNTER.getCounter());
+                    Thread.sleep(AppCounters.SERVICE_SLEEP_MILLS_COUNTER.getCounter());
                 } catch (InterruptedException exception) {
                     log.severe("[ERROR] ApplicationSender. Catch interrupt. Exit: " + exception.getMessage());
                 }

@@ -3,7 +3,7 @@ package org.allRemindMeBot.bot.services;
 import lombok.extern.java.Log;
 import org.allRemindMeBot.bot.body.Bot;
 import org.allRemindMeBot.bot.handlers.IncomingMsgHandler;
-import org.allRemindMeBot.enums.ServiceCounters;
+import org.allRemindMeBot.enums.AppCounters;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -26,7 +26,7 @@ public class MessageReceiver implements Runnable {
                 analyze(object);
             }
             try {
-                Thread.sleep(ServiceCounters.SERVICE_SLEEP_MILLS_COUNTER.getCounter());
+                Thread.sleep(AppCounters.SERVICE_SLEEP_MILLS_COUNTER.getCounter());
             } catch (InterruptedException exception) {
                 log.severe("[ERROR] MessageReceiver. Catch interrupt. Exit: " + exception.getMessage());
                 return;

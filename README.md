@@ -19,3 +19,4 @@ In the menu "CLEANING HISTORY" you can delete the base of your obsolete reminder
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
