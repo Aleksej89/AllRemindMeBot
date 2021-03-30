@@ -8,10 +8,14 @@ Date formats: DD.MM, DD.MM.YYYY
 Time format: HH:MM
 For example: 24.03 12:00 call mom.
 ##
+In the "HELP" menu you can view a description of the bot's functions.
+##
 In the "VIEW REMINDERS" menu, you can view upcoming reminders.
 ##
 In the "DELETE REMINDERS" menu you can see the list of upcoming reminders for deleting them.
 Removing reminders is done by calling the corresponding menu and clicking on the reminder of interest in the chat.
+##
+In the menu "CLEANING HISTORY" you can delete the base of your obsolete reminders
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
