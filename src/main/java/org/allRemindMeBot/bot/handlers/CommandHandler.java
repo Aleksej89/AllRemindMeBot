@@ -1,6 +1,9 @@
 package org.allRemindMeBot.bot.handlers;
 
-import org.allRemindMeBot.bot.menu.Menu;
+import org.allRemindMeBot.bot.handlers.userCommands.AddApplicationHandler;
+import org.allRemindMeBot.bot.handlers.userCommands.DeleteApplicationHandler;
+import org.allRemindMeBot.bot.handlers.userCommands.InfoApplicationHandler;
+import org.allRemindMeBot.bot.handlers.userCommands.LookApplicationHandler;
 import org.allRemindMeBot.entity.BotUser;
 import org.allRemindMeBot.enums.Buttons;
 import org.allRemindMeBot.enums.Messages;
