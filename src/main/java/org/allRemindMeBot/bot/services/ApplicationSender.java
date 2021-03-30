@@ -6,6 +6,7 @@ import org.allRemindMeBot.bot.body.Bot;
 import org.allRemindMeBot.dao.BotUserApplicationDao;
 import org.allRemindMeBot.entity.BotUserApplication;
 import org.allRemindMeBot.enums.AppCounters;
+import org.allRemindMeBot.enums.Delimiters;
 import org.allRemindMeBot.enums.Emoji;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -20,7 +21,6 @@ import java.util.Optional;
 @Component
 public class ApplicationSender implements Runnable {
     private final static int DATE_MILLS_COUNTER = 300;
-    private final static String APP_DELIMITER = "  ";
     private final BotUserApplicationDao applicationDao;
     private final Bot bot;
 
@@ -53,7 +53,7 @@ public class ApplicationSender implements Runnable {
             if (listApplications.get().size() > AppCounters.ZERO_COUNTER.getCounter()) {
                 for (BotUserApplication app : listApplications.get()) {
                     SendMessage message = new SendMessage();
-                    message.setText(Emoji.APP_EMOJI.getEmojiStr() + APP_DELIMITER + app.getApplicationText());
+                    message.setText(Emoji.APP_EMOJI.getEmojiStr() + Delimiters.TWO_WHITE_SPACE_DELIMITER.getDelimiter() + app.getApplicationText());
                     message.setChatId(String.valueOf(app.getChatId()));
                     try {
                         this.bot.execute(message);

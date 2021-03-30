@@ -4,7 +4,6 @@ import com.vdurmont.emoji.EmojiParser;
 import lombok.extern.java.Log;
 import org.allRemindMeBot.bot.converters.DateConverter;
 import org.allRemindMeBot.dao.BotUserApplicationDao;
-import org.allRemindMeBot.dao.BotUserDao;
 import org.allRemindMeBot.entity.BotUser;
 import org.allRemindMeBot.entity.BotUserApplication;
 import org.springframework.stereotype.Component;
