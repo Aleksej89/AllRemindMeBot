@@ -34,13 +34,12 @@ public class BotUserApplicationWorker {
         String messageText = update.getMessage().getText();
         Matcher date = Pattern.compile(DATE_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
         Matcher time = Pattern.compile(TIME_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
-        if (date.find()) {
-            if (time.find()) {
-                Optional<Date> dateOpt = DateConverter.getDate(date.group(1), time.group(1));
-                if (dateOpt.isPresent()) {
-                    application = Optional.of(BotUserApplication.builder().chatId(user.getUserChatId()).applicationText(messageText)
-                            .applicationText(messageText).dateApplication(dateOpt.get()).build());
-                }
+        if (date.find() && time.find()) {
+            Optional<Date> dateOpt = DateConverter.getDate(date.group(1), time.group(1));
+            if (dateOpt.isPresent()) {
+                application = Optional.of(BotUserApplication.builder().chatId(user.getUserChatId()).applicationText(messageText)
+                        .applicationText(messageText).dateApplication(dateOpt.get()).build());
+
             }
         }
         return application;

@@ -23,10 +23,9 @@ public class LookApplicationHandler {
         message.setText(String.valueOf(Messages.LOOK_EMPTY_MSG.getMessage()));
         Optional<List<BotUserApplication>> applications = this.botUserApplicationWorker.getFromBaseAllApplicationByChatId(user.getUserChatId());
         if (applications.isPresent()) {
-            List<BotUserApplication> listApplications = applications.get();
-            if (listApplications.size() > AppCounters.ZERO_COUNTER.getCounter()) {
+            if (applications.get().size() > AppCounters.ZERO_COUNTER.getCounter()) {
                 StringBuilder appMsg = new StringBuilder();
-                for (BotUserApplication application : listApplications) {
+                for (BotUserApplication application : applications.get()) {
                     appMsg.append(application.getApplicationText()).append("\n\n");
                 }
                 message.setText(String.valueOf(appMsg));

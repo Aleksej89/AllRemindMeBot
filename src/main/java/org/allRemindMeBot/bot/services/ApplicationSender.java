@@ -50,9 +50,8 @@ public class ApplicationSender implements Runnable {
         Optional<List<BotUserApplication>> listApplications = this.applicationDao.findAllBetweenDates(new Date(System.currentTimeMillis() - DATE_MILLS_COUNTER),
                 new Date(System.currentTimeMillis() + DATE_MILLS_COUNTER));
         if (listApplications.isPresent()) {
-            List<BotUserApplication> list = listApplications.get();
-            if (list.size() > AppCounters.ZERO_COUNTER.getCounter()) {
-                for (BotUserApplication app : list) {
+            if (listApplications.get().size() > AppCounters.ZERO_COUNTER.getCounter()) {
+                for (BotUserApplication app : listApplications.get()) {
                     SendMessage message = new SendMessage();
                     message.setText(Emoji.APP_EMOJI.getEmojiStr() + APP_DELIMITER + app.getApplicationText());
                     message.setChatId(String.valueOf(app.getChatId()));

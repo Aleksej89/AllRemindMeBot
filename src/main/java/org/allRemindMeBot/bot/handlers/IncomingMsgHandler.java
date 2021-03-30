@@ -22,6 +22,7 @@ public class IncomingMsgHandler {
 
     public SendMessage handle(Update update) {
         SendMessage message = new SendMessage();
+        message.setText(Messages.INFO_MSG.getMessage());
         BotUser user = this.botUserWorker.createNewBotUser(update);
         Optional<BotUser> botUser = this.botUserWorker.getFromBaseBotUser(user);
         if (botUser.isEmpty()) {
@@ -31,8 +32,6 @@ public class IncomingMsgHandler {
         }
         if (update.hasMessage() && update.getMessage().hasText() || update.hasCallbackQuery()) {
             message = this.commandHandler.handle(update, user);
-        } else {
-            message.setText(Messages.INFO_MSG.getMessage());
         }
         message.setChatId(String.valueOf(user.getUserChatId()));
         return message;
