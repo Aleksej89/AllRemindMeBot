@@ -42,7 +42,7 @@ public class ApplicationSender implements Runnable {
                 }
             }
         } catch (Exception exception) {
-            log.severe(exception.getMessage());
+            log.severe("[ERROR] ApplicationSender. " + exception.getMessage());
         }
     }
 

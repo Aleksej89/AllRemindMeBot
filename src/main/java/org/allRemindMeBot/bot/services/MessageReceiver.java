@@ -21,16 +21,20 @@ public class MessageReceiver implements Runnable {
     @Override
     public void run() {
         log.info("[STARTED] MessageReceiver.  Bot class: " + this.bot);
-        while (true) {
-            for (Object object = bot.receiveQueue.poll(); object != null; object = bot.receiveQueue.poll()) {
-                analyze(object);
+        try {
+            while (true) {
+                for (Object object = bot.receiveQueue.poll(); object != null; object = bot.receiveQueue.poll()) {
+                    analyze(object);
+                }
+                try {
+                    Thread.sleep(AppCounters.SERVICE_SLEEP_MILLS_COUNTER.getCounter());
+                } catch (InterruptedException exception) {
+                    log.severe("[ERROR] MessageReceiver. Catch interrupt. Exit: " + exception.getMessage());
+                    return;
+                }
             }
-            try {
-                Thread.sleep(AppCounters.SERVICE_SLEEP_MILLS_COUNTER.getCounter());
-            } catch (InterruptedException exception) {
-                log.severe("[ERROR] MessageReceiver. Catch interrupt. Exit: " + exception.getMessage());
-                return;
-            }
+        }catch (Exception exception){
+            log.severe("[ERROR] MessageReceiver. " + exception.getMessage());
         }
     }
 

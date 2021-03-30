@@ -31,8 +31,8 @@ public class MessageSender implements Runnable {
                     log.severe("[ERROR] MessageSender. Catch interrupt. Exit: " + exception.getMessage());
                 }
             }
-        } catch (Exception e) {
-            log.severe(e.getMessage());
+        } catch (Exception exception) {
+            log.severe("[ERROR] MessageSender. " + exception.getMessage());
         }
     }
 
