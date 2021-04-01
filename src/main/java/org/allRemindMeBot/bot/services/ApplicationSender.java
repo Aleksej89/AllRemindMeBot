@@ -29,6 +29,7 @@ public class ApplicationSender implements Runnable {
         this.applicationDao = applicationDao;
     }
 
+
     @Override
     public void run() {
         log.info("[STARTED] ApplicationSender. Bot class: " + this.bot);

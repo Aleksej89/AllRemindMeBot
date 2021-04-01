@@ -7,6 +7,7 @@ import org.allRemindMeBot.dao.BotUserApplicationDao;
 import org.allRemindMeBot.entity.BotUser;
 import org.allRemindMeBot.entity.BotUserApplication;
 import org.allRemindMeBot.enums.Delimiters;
+import org.allRemindMeBot.enums.Regexps;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -21,11 +22,6 @@ import java.util.regex.Pattern;
 public class BotUserApplicationWorker {
     private final BotUserApplicationDao applicationDao;
 
-    private static final String CHARACTER_FILTER = "[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]";
-    private final static String DATE_REGEXP = "(\\d{2}[.]\\d{2}[.]\\d{4}|\\d{2}[.]\\d{2})";
-    private final static String TIME_REGEXP = "(\\d{2}[:]\\d{2})";
-
-
     public BotUserApplicationWorker(BotUserApplicationDao applicationDao) {
         this.applicationDao = applicationDao;
     }
@@ -33,11 +29,11 @@ public class BotUserApplicationWorker {
     public Optional<BotUserApplication> createNewApplication(Update update, BotUser user) {
         Optional<BotUserApplication> application = Optional.empty();
         String messageText = EmojiParser.removeAllEmojis(update.getMessage().
-                getText()).replaceAll(CHARACTER_FILTER, Delimiters.NON_WHITE_SPACE_DELIMITER.getDelimiter()).trim();
+                getText()).replaceAll(Regexps.CHARACTER_FILTER_REGEXP.getRegexp(), Delimiters.NON_WHITE_SPACE_DELIMITER.getDelimiter()).trim();
         if (!messageText.isEmpty()) {
-            Matcher date = Pattern.compile(DATE_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
-            Matcher time = Pattern.compile(TIME_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
-            if (date.find() && time.find() || !date.find() && time.find()) {
+            Matcher date = this.getMatcher(messageText, Regexps.DATE_REGEXP.getRegexp());
+            Matcher time = this.getMatcher(messageText, Regexps.TIME_REGEXP.getRegexp());
+            if (time.find()) {
                 Optional<Date> dateOpt;
                 if (!date.find()) {
                     dateOpt = DateConverter.getDate(null, time.group(1));
@@ -51,6 +47,10 @@ public class BotUserApplicationWorker {
             }
         }
         return application;
+    }
+
+    private Matcher getMatcher(String messageText, String dateRegexp) {
+        return Pattern.compile(dateRegexp, Pattern.CASE_INSENSITIVE).matcher(messageText);
     }
 
     public void saveToBaseBotUserApplication(BotUserApplication application) {

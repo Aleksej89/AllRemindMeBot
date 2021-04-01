@@ -87,7 +87,7 @@ public class BotUserDaoImpl implements BotUserDao {
 
     @Override
     @Transactional
-    public void update(BotUser data) {
+    public void update() {
     }
 
     @Override

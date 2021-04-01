@@ -107,6 +107,6 @@ public class BotUserApplicationDaoImpl implements BotUserApplicationDao {
 
     @Override
     @Transactional
-    public void update(BotUserApplication data) {
+    public void update() {
     }
 }
