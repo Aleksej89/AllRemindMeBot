@@ -37,8 +37,13 @@ public class BotUserApplicationWorker {
         if (!messageText.isEmpty()) {
             Matcher date = Pattern.compile(DATE_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
             Matcher time = Pattern.compile(TIME_REGEXP, Pattern.CASE_INSENSITIVE).matcher(messageText);
-            if (date.find() && time.find()) {
-                Optional<Date> dateOpt = DateConverter.getDate(date.group(1), time.group(1));
+            if (date.find() && time.find() || !date.find() && time.find()) {
+                Optional<Date> dateOpt;
+                if (!date.find()) {
+                    dateOpt = DateConverter.getDate(null, time.group(1));
+                } else {
+                    dateOpt = DateConverter.getDate(date.group(1), time.group(1));
+                }
                 if (dateOpt.isPresent()) {
                     application = Optional.of(BotUserApplication.builder().chatId(user.getUserChatId()).applicationText(messageText)
                             .applicationText(messageText).dateApplication(dateOpt.get()).build());

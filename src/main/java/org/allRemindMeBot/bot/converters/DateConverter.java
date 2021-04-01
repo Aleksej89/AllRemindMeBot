@@ -22,14 +22,19 @@ public class DateConverter {
         format.applyPattern(Patterns.DATE_AND_TIME_PATTERN.getPattern());
         Optional<Date> date = Optional.empty();
         try {
-            if (dateStr.matches(TWO_COUNTER_REGEXP)) {
-                date = Optional.of(format.parse(dateStr + Delimiters.DATE_DELIMITER.getDelimiter() +
-                        Calendar.getInstance().get(Calendar.YEAR) + Delimiters.ONE_WHITE_SPACE_DELIMITER.getDelimiter() + time + Delimiters.TIME_DELIMITER.getDelimiter() +
-                        Patterns.TIME_ZERO_PATTERN.getPattern()));
-            }
-            if (dateStr.matches(MORE_THAN_TWO_COUNTER_REGEXP)) {
-                date = Optional.of(format.parse(dateStr + Delimiters.ONE_WHITE_SPACE_DELIMITER.getDelimiter() + time + Delimiters.TIME_DELIMITER.getDelimiter() +
-                        Patterns.TIME_ZERO_PATTERN.getPattern()));
+            if (dateStr != null) {
+                if (dateStr.matches(TWO_COUNTER_REGEXP)) {
+                    date = Optional.of(format.parse(dateStr + Delimiters.DATE_DELIMITER.getDelimiter() +
+                            Calendar.getInstance().get(Calendar.YEAR) + Delimiters.ONE_WHITE_SPACE_DELIMITER.getDelimiter() + time + Delimiters.TIME_DELIMITER.getDelimiter() +
+                            Patterns.TIME_ZERO_PATTERN.getPattern()));
+                }
+                if (dateStr.matches(MORE_THAN_TWO_COUNTER_REGEXP)) {
+                    date = Optional.of(format.parse(dateStr + Delimiters.ONE_WHITE_SPACE_DELIMITER.getDelimiter() + time + Delimiters.TIME_DELIMITER.getDelimiter() +
+                            Patterns.TIME_ZERO_PATTERN.getPattern()));
+                }
+            } else {
+                date = Optional.of(format.parse(new SimpleDateFormat(Patterns.DATE_PATTERN.getPattern()).format(new Date()) + Delimiters.ONE_WHITE_SPACE_DELIMITER.getDelimiter() +
+                        time + Delimiters.TIME_DELIMITER.getDelimiter() + Patterns.TIME_ZERO_PATTERN.getPattern()));
             }
             if (date.isPresent()) {
                 if (date.get().after(new Date())) return date;
