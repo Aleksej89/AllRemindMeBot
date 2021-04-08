@@ -1,7 +1,6 @@
 package org.allRemindMeBot.bot.services;
 
 import lombok.extern.java.Log;
-
 import org.allRemindMeBot.bot.body.Bot;
 import org.allRemindMeBot.dao.BotUserApplicationDao;
 import org.allRemindMeBot.entity.BotUserApplication;

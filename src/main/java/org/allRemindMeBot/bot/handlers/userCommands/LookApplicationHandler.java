@@ -29,7 +29,7 @@ public class LookApplicationHandler {
             if (applications.get().size() > AppCounters.ZERO_COUNTER.getCounter()) {
                 StringBuilder appMsg = new StringBuilder();
                 for (BotUserApplication application : applications.get()) {
-                    appMsg.append(Emoji.LOOK_EMOJI.getEmojiStr()).append(Delimiters.ONE_WHITE_SPACE_DELIMITER.getDelimiter()).append(application.getApplicationText()).append("\n\n");
+                    appMsg.append(Emoji.LOOK_EMOJI.getEmojiStr()).append(Delimiters.ONE_WHITE_SPACE_DELIMITER.getDelimiter()).append(application.getApplicationText()).append(Delimiters.TWO_LINE_DELIMITER.getDelimiter());
                 }
                 message.setText(String.valueOf(appMsg));
             }
