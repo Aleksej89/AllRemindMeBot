@@ -1,0 +1,15 @@
+bot:
+  name: AllRemindMeBot
+  token: 1649632457:AAERiBeO_v1K71v_iEEc1K0U1jsDKGj3QbY
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/bot_base
+    driver-class-name: org.mariadb.jdbc.Driver
+    initialization-mode: never
+    username: root
+    sql-script-encoding: UTF-8
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none

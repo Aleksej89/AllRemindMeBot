@@ -33,7 +33,7 @@ public class MessageReceiver implements Runnable {
                     return;
                 }
             }
-        }catch (Exception exception){
+        } catch (Exception exception) {
             log.severe("[ERROR] MessageReceiver. " + exception.getMessage());
         }
     }

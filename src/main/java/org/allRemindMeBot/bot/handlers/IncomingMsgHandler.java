@@ -23,19 +23,20 @@ public class IncomingMsgHandler {
 
     public SendMessage handle(Update update) {
         SendMessage message = new SendMessage();
-        message.setText(Messages.INFO_MSG.getMessage());
-        message.setReplyMarkup(Menu.getReplyKeyboardMarkup());
-        BotUser user = this.botUserWorker.createNewBotUser(update);
-        Optional<BotUser> botUser = this.botUserWorker.getFromBaseBotUser(user);
-        if (botUser.isEmpty()) {
-            this.botUserWorker.saveToBaseBotUser(user);
-        } else {
-            user = botUser.get();
-        }
-        if (update.hasMessage() && update.getMessage().hasText() || update.hasCallbackQuery()) {
+        if (update.hasMessage() || update.hasCallbackQuery()) {
+            message.setText(Messages.INFO_MSG.getMessage());
+            message.setReplyMarkup(Menu.getReplyKeyboardMarkup());
+            BotUser user = this.botUserWorker.createNewBotUser(update);
+            Optional<BotUser> botUser = this.botUserWorker.getFromBaseBotUser(user);
+            if (botUser.isEmpty()) {
+                this.botUserWorker.saveToBaseBotUser(user);
+            } else {
+                user = botUser.get();
+            }
             this.commandHandler.handle(message, update, user);
+            message.setChatId(String.valueOf(user.getUserChatId()));
+            return message;
         }
-        message.setChatId(String.valueOf(user.getUserChatId()));
         return message;
     }
 }

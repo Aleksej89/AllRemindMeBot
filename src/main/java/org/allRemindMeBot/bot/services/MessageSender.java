@@ -38,7 +38,9 @@ public class MessageSender implements Runnable {
 
     private void send(Object object) {
         try {
-            this.bot.execute((SendMessage) object);
+            if (((SendMessage) object).getChatId() != null){
+                this.bot.execute((SendMessage) object);
+            }
         } catch (TelegramApiException exception) {
             log.severe("[ERROR] MessageSender. Cant execute: " + exception.getMessage());
         }

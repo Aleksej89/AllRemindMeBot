@@ -55,6 +55,7 @@ public class ApplicationSender implements Runnable {
                     SendMessage message = new SendMessage();
                     message.setText(Emoji.APP_EMOJI.getEmojiStr() + Delimiters.TWO_WHITE_SPACE_DELIMITER.getDelimiter() + app.getApplicationText());
                     message.setChatId(String.valueOf(app.getChatId()));
+                    System.out.println(message);
                     try {
                         this.bot.execute(message);
                     } catch (TelegramApiException exception) {
